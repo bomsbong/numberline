@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Line</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+  <script src="js/vue-html-to-paper.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  
+  
+
+</head>
+<body >
+
+  <div id="app">
+    <div class="container" >
+      <h1 class="text-center title">Number Line Generator</h1>
+      <div class="row">
+        <div class="col-md-12 my-5" id="settings">
+            <form class="form-row">
+              <div class="col-md-3 col-sm-12">
+                <label>Choose your Font:</label>
+                <select class="custom-select" v-model="fontFamily">
+                  <option v-for="(font, idx) in fonts" :key="idx">
+                    {{font}}
+                  </option>
+                </select>
+              </div>
+              
+              <div class="col-md-3 col-sm-12">
+                <label>Start Number:</label>
+                <input type="number" class="form-control" v-model.number="startNum" >
+              </div>
+              <div class="col-md-3 col-sm-12">
+                <label>End Number:</label>
+                <input type="number" class="form-control" v-model.number="endNum" >
+              </div>
+              <div class="col-md-3 col-sm-12">
+                <label>Interval:</label>
+                <input type="number" class="form-control" v-model.number="interval" >
+              </div>
+
+              <div class="col-md-4 col-sm-12 my-3">
+                <label>Choose your Color:</label>
+                <input type="color" v-model="lineColor">
+              </div>
+
+              <div class="col-md-4 col-sm-12 my-3">
+                <button class="btn btn-outline-primary" @click="printDiv('#numberline')">
+                  Print Numberline
+                </button>
+              </div>
+            </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 my-5" id="numberline">
+          <div class="arrow-left" :style="`--setColor: ${setColor}`"></div>
+          <div class="x-axis" :style="{ fontFamily: fontFamily, borderColor: lineColor} ">
+            <div  class="numbers" :style="`--setColor: ${setColor} ` "
+            v-for="number in range(startNum, endNum, interval)"> 
+              {{number}}
+            </div>
+          </div>
+          <div class="arrow-right" :style="`--setColor: ${setColor}`"></div>
+        </div>
+        
+      </div>
+     
+      
+    </div>
+  </div>
+
+
+  
+</body>
+<script>
+
+    var app = new Vue({
+    el: '#app',
+    data:{
+      fontFamily: 'Roboto',
+      fonts:['Roboto','Fredoka One', 'Balsamiq Sans', 'Alfa Slab One'],
+      startNum: 0,
+      endNum:1,
+      interval:1,
+      lineColor: '#000000',
+      
+      
+    },
+    computed:{
+        setColor() {
+          return this.lineColor
+        },
+
+    },
+    methods:{
+      range :  (start, end, step) => {
+
+        let arr = []
+         step = step || 1
+         end = end || 1
+
+        if(step % 1 != 0){
+          for(let i = start; i <= end; i += step){
+            arr.push(i.toFixed(1))
+          }
+        }else{
+          for(let i = start; i <= end; i += step){
+            arr.push(i)
+          }
+        }
+
+        return arr
+        
+      },
+      printDiv(element){
+          window.print();
+      }
+
+   }
+  })
+  
+</script>
+</html>
+

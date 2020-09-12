@@ -1,0 +1,24 @@
+range : function (start, end, step) {
+  if(arguments.length === 1){
+    end = start
+    start = 0
+  }
+  end = end || 0
+  step = step || 1
+  let arr = []
+  for(arr; (end - start) * step > 0; start += step){
+    arr.push(start)
+  }
+  return arr
+}
+
+
+
+methods:{
+  range : function (start, end) {
+    return Array(end - start + 1).fill().map((_, idx) => start + idx)
+  }
+ }
+
+
+ // return Array.from(Array(end + 1).keys()).slice(start);
