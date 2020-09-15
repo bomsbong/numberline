@@ -50,14 +50,20 @@
               </div>
 
               <div class="col-md-3 col-sm-12 my-4">
-                <button class="btn btn-outline-success form-control" @click.prevent="printDiv('#numberline')">
-                  Print Numberline
+                <button class="btn btn-outline-primary form-control" @click.prevent="{verticalSpace++}">
+                  Adjust Vertical Space
                 </button>
               </div>
 
               <div class="col-md-3 col-sm-12 my-4">
                 <button class="btn btn-outline-primary form-control" @click.prevent="range(startNum, endNum, interval)">
                   Generate Numberline
+                </button>
+              </div>
+
+              <div class="col-md-3 col-sm-12 my-4">
+                <button class="btn btn-outline-success form-control" @click.prevent="printDiv('#numberline')">
+                  Print Numberline
                 </button>
               </div>
 
@@ -70,7 +76,7 @@
         </div>
       </div>
 
-      <div class="row" v-for="(range,index) in numberLineSet" :key="index">
+      <div class="row" :style="{marginBottom: verticalSpace + 'px'}" v-for="(range,index) in numberLineSet" :key="index">
         <div class="col-md-12 my-5" id="numberline">
           <div class="arrow-left" :style="`--setColor: ${setColor}`"></div>
           <div class="x-axis" :style="{ fontFamily: fontFamily, borderColor: lineColor} ">
@@ -105,7 +111,8 @@
       endNum:1,
       interval:1,
       lineColor: '#000000',
-      numberLineSet:[]
+      numberLineSet:[],
+      verticalSpace: 25
     },
     computed:{
         setColor() {
