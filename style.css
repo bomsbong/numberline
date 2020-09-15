@@ -43,32 +43,6 @@
 }
 
 
-/* .x-axis:before{
-  content: '';
-  width: 0;
-  height: 0;
-  border-top: 15px solid transparent;
-  
-  border-right: 30px solid var(--setColor);
-  border-bottom: 15px solid transparent;
-  position: absolute;
-  top: 8px;
-  left: -15px;
-}
-
-.x-axis:after{
-  content: '';
-  width: 0;
-  height: 0;
-  border-top: 15px solid transparent;
-  border-left: 30px solid var(--setColor);
-  border-bottom: 15px solid transparent;
-  position: absolute;
-  top: 8px;
-  right: -15px;
-} */
-
-
 .numbers{
   position: relative;
   top: 30px;
@@ -84,6 +58,10 @@
   position: absolute;
   top: -13px;
   left: 2px;
+}
+
+.row:nth-child(3) {
+  display: none;
 }
 
 
