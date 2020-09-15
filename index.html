@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Number Line</title>
   
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-  <script src="js/vue-html-to-paper.js"></script>
+
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   
@@ -50,29 +50,33 @@
               </div>
 
               <div class="col-md-4 col-sm-12 my-3">
-                <button class="btn btn-outline-primary" @click="printDiv('#numberline')">
+                <button class="btn btn-outline-primary" @click.prevent="printDiv('#numberline')">
                   Print Numberline
+                </button>
+              </div>
+
+              <div class="col-md-4 col-sm-12 my-3">
+                <button class="btn btn-outline-primary" @click.prevent="range(startNum, endNum, interval)">
+                  Generate Numberline
                 </button>
               </div>
             </form>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-for="(range,index) in numberLineSet" :key="index">
         <div class="col-md-12 my-5" id="numberline">
           <div class="arrow-left" :style="`--setColor: ${setColor}`"></div>
           <div class="x-axis" :style="{ fontFamily: fontFamily, borderColor: lineColor} ">
             <div  class="numbers" :style="`--setColor: ${setColor} ` "
-            v-for="number in range(startNum, endNum, interval)"> 
+            v-for="number in range"> 
               {{number}}
             </div>
           </div>
           <div class="arrow-right" :style="`--setColor: ${setColor}`"></div>
         </div>
-        
       </div>
-     
-      
+
     </div>
   </div>
 
@@ -81,8 +85,13 @@
 </body>
 <script>
 
+
     var app = new Vue({
     el: '#app',
+    created(){
+      this.range(this.startNum, this.endNum, this.interval)
+     console.log(this.numberLineSet)
+   },
     data:{
       fontFamily: 'Roboto',
       fonts:['Roboto','Fredoka One', 'Balsamiq Sans', 'Alfa Slab One'],
@@ -90,8 +99,7 @@
       endNum:1,
       interval:1,
       lineColor: '#000000',
-      
-      
+      numberLineSet:[]
     },
     computed:{
         setColor() {
@@ -100,28 +108,33 @@
 
     },
     methods:{
-      range :  (start, end, step) => {
+      async  range  (start, end, step) {
 
-        let arr = []
-         step = step || 1
-         end = end || 1
+      let arr = []
+      step = step || 1
+      end = end || 1
 
-        if(step % 1 != 0){
-          for(let i = start; i <= end; i += step){
-            arr.push(i.toFixed(1))
-          }
-        }else{
-          for(let i = start; i <= end; i += step){
-            arr.push(i)
-          }
+      if(step % 1 != 0){
+        for(let i = start; i <= end; i += step){
+          arr.push(i.toFixed(1))
         }
+      }else{
+        for(let i = start; i <= end; i += step){
+          arr.push(i)
+        }
+      }
 
-        return arr
+
+
+      await this.numberLineSet.push(arr)
+      await console.log(this.numberLineSet)
         
       },
       printDiv(element){
           window.print();
-      }
+      },
+
+
 
    }
   })
